@@ -72,9 +72,9 @@ const ParallaxVertical = ({ navigation }: { navigation: any }) => {
         renderItem={({ item, index }) => {
           const translate = scrollY.interpolate({
             inputRange: [
-              (index - 1) * width,
-              index * width,
-              (index + 1) * width,
+              (index - 1) * height,
+              index * height,
+              (index + 1) * height,
             ],
             outputRange: [-scale(240), 0, scale(240)],
             extrapolate: "clamp",
