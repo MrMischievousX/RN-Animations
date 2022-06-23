@@ -40,21 +40,26 @@ const ParallaxHorizontal = ({ navigation }: { navigation: any }) => {
     translate: any;
     index: number;
   }) => {
-    const transform =
-      index % 3 !== 0 ? { translateX: translate } : { translateY: translate };
+    const uri = `https://picsum.photos/200/30${0 + (index % 9)}`;
+
     return (
       <View style={styles.imgContainer}>
-        <Animated.View style={{ ...styles.imgAnimate, backgroundColor }}>
-          <Animated.Image
-            source={{ uri: item.download_url }}
-            resizeMode="cover"
-            style={{
-              ...styles.image,
-              //   transform: [transform],
-              transform: [{ translateX: translate }],
-            }}
-          />
-        </Animated.View>
+        <View style={styles.shadow}>
+          <Animated.View
+            style={{ ...styles.imgAnimate, borderColor: backgroundColor }}
+          >
+            <Animated.Image
+              source={{
+                uri,
+              }}
+              resizeMode="cover"
+              style={{
+                ...styles.image,
+                transform: [{ translateX: translate }],
+              }}
+            />
+          </Animated.View>
+        </View>
       </View>
     );
   };
@@ -121,30 +126,31 @@ const styles = StyleSheet.create({
   imgContainer: {
     height: height,
     width: width,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
-    elevation: 11,
     justifyContent: "center",
     alignItems: "center",
   },
   imgAnimate: {
     justifyContent: "center",
     alignItems: "center",
-    width: scale(260),
-    height: scale(420),
     overflow: "hidden",
     alignSelf: "center",
     borderRadius: scale(24),
+    borderWidth: scale(12),
   },
   image: {
     width: scale(240),
     height: scale(400),
-    borderRadius: scale(18),
+    borderRadius: scale(12),
+  },
+  shadow: {
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 28,
+    shadowColor: "black",
   },
 });
 

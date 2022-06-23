@@ -16,9 +16,17 @@ A application to show different animation we can do in react native.
 <br/>
 <br/>
 
-## :sparkles: Main Features
+## :sparkles: Animations
 
-- Multiple Animations
+- Horizontal Parallax Effect
+
+- Vertical Parallax Effect
+
+- Carousel Zoom Effect
+
+- Background Change Blur Effect
+
+- Slow Loading Effect
 
 <br/>
 <br/>
@@ -33,6 +41,14 @@ A application to show different animation we can do in react native.
 <div>
 <img width="250px" margin="30px" style="margin:20px;" src="./assets/gifs/vertical_parallax.gif">
 <h3>Vertical Parallax</h3>
+</div>
+<div>
+<img width="250px" margin="30px" style="margin:20px;" src="./assets/gifs/background_change.gif">
+<h3>Background Change Blur</h3>
+</div>
+<div>
+<img width="250px" margin="30px" style="margin:20px;" src="./assets/gifs/slow_loading.gif">
+<h3>Slow Loading</h3>
 </div>
 </div>
 

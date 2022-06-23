@@ -3,17 +3,29 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import { scale } from "./constants/Layout";
+import BackgroundChange from "./screens/BackgroundChange";
+import CarouselZoom from "./screens/CarouselZoom";
 import ParallaxHorizontal from "./screens/ParallaxHorizontal";
 import ParallaxVertical from "./screens/ParallaxVertical";
+import SlowLoading from "./screens/SlowLoading";
 
 function HomeScreen({ navigation }: { navigation: any }) {
+  const nav = navigation.navigate;
+
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "white",
+      }}
+    >
       <Text style={{ fontSize: scale(24), fontWeight: "500" }}>Animations</Text>
       <Text
         style={{ fontSize: scale(18), marginTop: scale(24) }}
         onPress={() => {
-          navigation.navigate("ParallaxHorizontal");
+          nav("ParallaxHorizontal");
         }}
       >
         Horizontal Parallax Effect
@@ -21,10 +33,34 @@ function HomeScreen({ navigation }: { navigation: any }) {
       <Text
         style={{ fontSize: scale(18), marginTop: scale(12) }}
         onPress={() => {
-          navigation.navigate("ParallaxVertical");
+          nav("ParallaxVertical");
         }}
       >
         Vertical Parallax Effect
+      </Text>
+      <Text
+        style={{ fontSize: scale(18), marginTop: scale(12) }}
+        onPress={() => {
+          nav("CarouselZoom");
+        }}
+      >
+        Carousel Zoom Effect
+      </Text>
+      <Text
+        style={{ fontSize: scale(18), marginTop: scale(12) }}
+        onPress={() => {
+          nav("BackgroundChange");
+        }}
+      >
+        Background Change Blur Effect
+      </Text>
+      <Text
+        style={{ fontSize: scale(18), marginTop: scale(12) }}
+        onPress={() => {
+          nav("SlowLoading");
+        }}
+      >
+        Slow Loading Effect
       </Text>
     </View>
   );
@@ -45,8 +81,9 @@ export default function MyStack() {
           component={ParallaxHorizontal}
         />
         <Stack.Screen name="ParallaxVertical" component={ParallaxVertical} />
-        <Stack.Screen name="Profile" component={HomeScreen} />
-        <Stack.Screen name="Settings" component={HomeScreen} />
+        <Stack.Screen name="CarouselZoom" component={CarouselZoom} />
+        <Stack.Screen name="BackgroundChange" component={BackgroundChange} />
+        <Stack.Screen name="SlowLoading" component={SlowLoading} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>

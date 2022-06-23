@@ -3,18 +3,17 @@ import {
   Animated,
   ActivityIndicator,
   StyleSheet,
+  Text,
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { height, scale, width } from "../constants/Layout";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-// "https://images.unsplash.com/photo-1655743851261-4805d5104cd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-
-const ParallaxVertical = ({ navigation }: { navigation: any }) => {
+const CarouselZoom = ({ navigation }: { navigation: any }) => {
   const [data, setData] = useState<any[]>([]);
 
-  const scrollY = useRef(new Animated.Value(0)).current;
+  const scroll = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     fetch("https://picsum.photos/v2/list?page=2&limit=30")
@@ -25,8 +24,8 @@ const ParallaxVertical = ({ navigation }: { navigation: any }) => {
   const backgroundColor =
     data.length < 2
       ? "white"
-      : scrollY.interpolate({
-          inputRange: data.map((_, index) => index * height),
+      : scroll.interpolate({
+          inputRange: data.map((_, index) => index * width),
           outputRange: data.map(
             (_, __) => `hsl(${Math.random() * 360},50%,50%)`
           ),
@@ -42,7 +41,7 @@ const ParallaxVertical = ({ navigation }: { navigation: any }) => {
     translate: any;
     index: number;
   }) => {
-    const uri = `https://picsum.photos/200/30${0 + (index % 9)}`;
+    const uri = `https://picsum.photos/200/30${1 + (index % 9)}`;
 
     return (
       <View style={styles.imgContainer}>
@@ -57,7 +56,7 @@ const ParallaxVertical = ({ navigation }: { navigation: any }) => {
               resizeMode="cover"
               style={{
                 ...styles.image,
-                transform: [{ translateY: translate }],
+                transform: [{ scale: translate }],
               }}
             />
           </Animated.View>
@@ -66,25 +65,27 @@ const ParallaxVertical = ({ navigation }: { navigation: any }) => {
     );
   };
 
-  const FlatV = () => {
+  const FlatZ = () => {
     return (
       <Animated.FlatList
         onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          [{ nativeEvent: { contentOffset: { x: scroll } } }],
           { useNativeDriver: false }
         )}
+        bouncesZoom
         data={data}
+        horizontal
         keyExtractor={(_, index) => _.id}
-        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         pagingEnabled
         renderItem={({ item, index }) => {
-          const translate = scrollY.interpolate({
+          const translate = scroll.interpolate({
             inputRange: [
-              (index - 1) * height,
-              index * height,
-              (index + 1) * height,
+              (index - 1) * width,
+              index * width,
+              (index + 1) * width,
             ],
-            outputRange: [-scale(400), 0, scale(400)],
+            outputRange: [3, 1, 3],
             extrapolate: "clamp",
           });
 
@@ -99,7 +100,7 @@ const ParallaxVertical = ({ navigation }: { navigation: any }) => {
       {data.length < 1 ? (
         <ActivityIndicator size="large" color={"white"} />
       ) : (
-        <FlatV />
+        <FlatZ />
       )}
       <TouchableOpacity
         onPress={() => navigation.goBack()}
@@ -154,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ParallaxVertical;
+export default CarouselZoom;
