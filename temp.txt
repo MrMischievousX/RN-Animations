@@ -1,0 +1,177 @@
+import {
+  View,
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { height, scale, width } from "../constants/Layout";
+
+const AnimatedOnboarding = ({ navigation }: { navigation: any }) => {
+  // const animateX = useRef(new Animated.Value(-width)).current;
+  const animatedVal = useRef(new Animated.Value(0)).current;
+  const [current, setCurrent] = useState(0);
+
+  // useEffect(() => {
+  //   Animated.loop(
+  //     Animated.timing(animateX, {
+  //       toValue: 0,
+  //       useNativeDriver: true,
+  //       duration: 2000,
+  //     }),
+  //     {
+  //       iterations: -1,
+  //     }
+  //   ).start();
+  // }, []);
+
+  const animate = (val: any) =>
+    Animated.timing(animatedVal, {
+      toValue: val,
+      useNativeDriver: false,
+      duration: 2000,
+    }).start();
+
+  const bgCircle = animatedVal.interpolate({
+    inputRange: [0, 0.001, 0.5, 0.501, 1],
+    outputRange: ["blue", "blue", "blue", "red", "red"],
+  });
+  const bgOuterCircle = animatedVal.interpolate({
+    inputRange: [0, 0.001, 0.5, 0.501, 1],
+    outputRange: ["red", "red", "red", "blue", "blue"],
+  });
+  const Circle = () => {
+    return (
+      <Animated.View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          flex: 1,
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: 8,
+          paddingBottom: 50,
+          backgroundColor: bgOuterCircle,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Pressed");
+            setCurrent(current == 0 ? 1 : 0);
+            animate(current);
+          }}
+        >
+          <Animated.View
+            style={{
+              ...styles.circle,
+              backgroundColor: bgCircle,
+              transform: [
+                { perspective: 200 },
+                {
+                  rotateY: animatedVal.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: ["0deg", "-90deg", "-180deg"],
+                  }),
+                },
+                {
+                  scale: animatedVal.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: [1, 6, 1],
+                  }),
+                },
+                {
+                  translateX: animatedVal.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: [0, scale(36), 0],
+                  }),
+                },
+              ],
+            }}
+          />
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  };
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Circle />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  circle: {
+    width: scale(72),
+    height: scale(72),
+    bottom: scale(72),
+    alignSelf: "center",
+    borderRadius: scale(72),
+  },
+});
+
+export default AnimatedOnboarding;
+
+{
+  /* <Pressable
+  style={{
+    flex: 1,
+    alignItems: "center",
+  }}
+>
+  <Animated.View
+    style={{
+      backgroundColor: "pink",
+      width: width * 0.2,
+      height: width * 0.2,
+      borderRadius: width * 0.2,
+      transform: [{ scale: scale }],
+      position: "absolute",
+      bottom: width * 0.1,
+    }}
+  />
+</Pressable>; */
+  // <SafeAreaView style={{ ...styles.main }}>
+  //   <FlatList
+  //     data={Array(3).fill(1)}
+  //     pagingEnabled
+  //     horizontal
+  //     keyExtractor={(_, index) => index.toString()}
+  //     renderItem={({ item, index }) => {
+  //       return (
+  //         <View
+  //           style={{
+  //             flex: 1,
+  //             backgroundColor: "red",
+  //             width: width,
+  //             height: height,
+  //           }}
+  //         >
+  //           <Animated.View
+  //             style={{
+  //               width: width,
+  //               height: height * 0.6,
+  //               backgroundColor: "white",
+  //               borderRadius: width * 0.05,
+  //               transform: [{ translateX: animateX }],
+  //               position: "relative",
+  //               top: -height * 0.2,
+  //             }}
+  //           />
+  //         </View>
+  //       );
+  //     }}
+  //   />
+  // </SafeAreaView>
+}

@@ -28,6 +28,8 @@ A application to show different animation we can do in react native.
 
 - Slow Loading Effect
 
+- Animated Onboarding
+
 <br/>
 <br/>
 

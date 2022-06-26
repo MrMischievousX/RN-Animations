@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import { scale } from "./constants/Layout";
+import AnimatedOnboarding from "./screens/AnimatedOnboarding";
 import BackgroundChange from "./screens/BackgroundChange";
 import CarouselZoom from "./screens/CarouselZoom";
 import ParallaxHorizontal from "./screens/ParallaxHorizontal";
@@ -62,6 +63,14 @@ function HomeScreen({ navigation }: { navigation: any }) {
       >
         Slow Loading Effect
       </Text>
+      <Text
+        style={{ fontSize: scale(18), marginTop: scale(12) }}
+        onPress={() => {
+          nav("AnimatedOnboarding");
+        }}
+      >
+        Animated Onboarding
+      </Text>
     </View>
   );
 }
@@ -84,6 +93,10 @@ export default function MyStack() {
         <Stack.Screen name="CarouselZoom" component={CarouselZoom} />
         <Stack.Screen name="BackgroundChange" component={BackgroundChange} />
         <Stack.Screen name="SlowLoading" component={SlowLoading} />
+        <Stack.Screen
+          name="AnimatedOnboarding"
+          component={AnimatedOnboarding}
+        />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>
