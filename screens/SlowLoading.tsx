@@ -9,6 +9,9 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { scale, isSmallDevice } from "../constants/Layout";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Svg, { Circle, Rect } from "react-native-svg";
+
+const CicrleAnimated = Animated.createAnimatedComponent(Circle);
 
 const SlowLoading = ({ navigation }: { navigation: any }) => {
   const animateMainText = useRef(new Animated.Value(scale(320))).current;
@@ -82,6 +85,8 @@ const SlowLoading = ({ navigation }: { navigation: any }) => {
     });
   }, []);
 
+  const circumference = 2 * Math.PI * 45;
+
   return (
     <SafeAreaView style={styles.main}>
       <View style={styles.container}>
@@ -123,15 +128,41 @@ const SlowLoading = ({ navigation }: { navigation: any }) => {
       >
         Made by using Animated api and Easing functions
       </Animated.Text>
-      <Animated.View
-        style={{
-          ...styles.circleContainer,
-          opacity: animateButton,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+      <View style={styles.circleContainer}>
+        <Svg>
+          <CicrleAnimated
+            cx="50%"
+            cy="50%"
+            r="45"
+            stroke="white"
+            strokeWidth="3"
+            fill="transparent"
+            strokeDashoffset={animateButton.interpolate({
+              inputRange: [0, 1],
+              outputRange: [
+                (circumference * 100) / 100,
+                (circumference * 0) / 100,
+              ],
+            })}
+            rotation="-90"
+            origin="51, 51"
+            strokeDasharray={circumference}
+            strokeLinecap="round"
+          />
+        </Svg>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            position: "absolute",
+            // left: isSmallDevice ? -scale(22) : -scale(26),
+            // top: isSmallDevice ? -scale(22) : -scale(26),
+          }}
+        >
           <Animated.View
-            style={{ ...styles.circle, transform: [{ scale: animateButton }] }}
+            style={{
+              ...styles.circle,
+              transform: [{ scale: animateButton }],
+            }}
           >
             <Ionicons
               name="chevron-back-outline"
@@ -140,7 +171,14 @@ const SlowLoading = ({ navigation }: { navigation: any }) => {
             />
           </Animated.View>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
+
+      {/* <Animated.View
+        style={{
+          ...styles.circleContainer,
+          opacity: animateButton,
+        }}
+      ></Animated.View> */}
     </SafeAreaView>
   );
 };
@@ -188,8 +226,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: scale(43),
-    borderWidth: scale(2),
-    borderColor: "lightyellow",
   },
   circle: {
     width: isSmallDevice ? scale(44) : scale(52),

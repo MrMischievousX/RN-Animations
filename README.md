@@ -33,7 +33,7 @@ A application to show different animation we can do in react native.
 <br/>
 <br/>
 
-## :camera_flash: Screenshots
+## :camera_flash: Examples
 
 <div align="center" style="margin:auto;width:100%;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;">
 <div>
@@ -51,6 +51,14 @@ A application to show different animation we can do in react native.
 <div>
 <img width="250px" margin="30px" style="margin:20px;" src="./assets/gifs/slow_loading.gif">
 <h3>Slow Loading</h3>
+</div>
+<div>
+<img width="250px" margin="30px" style="margin:20px;" src="./assets/gifs/animated_onboarding.gif">
+<h3>Animated Onboarding</h3>
+</div>
+<div>
+<img width="250px" margin="30px" style="margin:20px;" src="./assets/gifs/onboarding.gif">
+<h3>Onboarding</h3>
 </div>
 </div>
 

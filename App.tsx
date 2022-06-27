@@ -6,6 +6,7 @@ import { scale } from "./constants/Layout";
 import AnimatedOnboarding from "./screens/AnimatedOnboarding";
 import BackgroundChange from "./screens/BackgroundChange";
 import CarouselZoom from "./screens/CarouselZoom";
+import Onboarding from "./screens/Onboarding";
 import ParallaxHorizontal from "./screens/ParallaxHorizontal";
 import ParallaxVertical from "./screens/ParallaxVertical";
 import SlowLoading from "./screens/SlowLoading";
@@ -71,6 +72,14 @@ function HomeScreen({ navigation }: { navigation: any }) {
       >
         Animated Onboarding
       </Text>
+      <Text
+        style={{ fontSize: scale(18), marginTop: scale(12) }}
+        onPress={() => {
+          nav("Onboarding");
+        }}
+      >
+        Onboarding
+      </Text>
     </View>
   );
 }
@@ -97,8 +106,9 @@ export default function MyStack() {
           name="AnimatedOnboarding"
           component={AnimatedOnboarding}
         />
+        <Stack.Screen name="Onboarding" component={Onboarding} />
       </Stack.Navigator>
-      <StatusBar />
+      <StatusBar hidden />
     </NavigationContainer>
   );
 }
